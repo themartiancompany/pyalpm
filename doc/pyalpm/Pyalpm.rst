@@ -53,7 +53,7 @@ The pyalpm module contains a a number of convenience functions for general usage
 
 .. py:data:: SIG_DATABASE_OPTIONAL
 
-      Database singing optional, absence of signature is not an error
+      Database signing optional, absence of signature is not an error
 
 .. py:data:: SIG_DATABASE_MARGINAL_OK
 
