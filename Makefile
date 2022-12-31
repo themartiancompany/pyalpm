@@ -7,8 +7,8 @@ PYTEST_OPTIONS+=-s
 PYTEST_INPUT?=test
 PYTEST_COVERAGE_OPTIONS+=--cov-report=term-missing --cov-report=html:test/coverage --cov=pycman
 EXT_COVERAGE_DIR=test/ext-coverage
-PY_VERSION=$(shell ${PYTHON} -c "import sys; print('{0[0]}.{0[1]}'.format(sys.version_info))")
-BUILD_DIR=build/lib.linux-$(shell uname -m)-${PY_VERSION}
+PY_VERSION=$(shell ${PYTHON} -c "import sys; print('{0[0]}{0[1]}'.format(sys.version_info))")
+BUILD_DIR=build/lib.linux-$(shell uname -m)-cpython-${PY_VERSION}
 DOC_DIR=doc
 
 .PHONY: test doc lint build
