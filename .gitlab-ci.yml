@@ -26,10 +26,11 @@ test:
     - make build
     - PYTEST_OPTIONS="--junitxml=report.xml --cov-report xml" make test
   artifacts:
-    when: always
     reports:
       junit: report.xml
-      cobertura: coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
   except:
     - schedules
 
