@@ -7,6 +7,10 @@ Packages
 
       The name of the package
 
+   .. py:attribute:: base (str)
+
+      The package base name
+
    .. py:attribute:: builddate (Long long)
 
       The date on which this package was built
