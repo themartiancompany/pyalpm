@@ -111,10 +111,11 @@ class PacmanConfEnumeratorSession():
 			if line[0] == '[' and line[-1] == ']':
 				current_section = line[1:-1]
 				continue
-			if current_section is None:
-				raise InvalidSyntax(f.name, 'statement outside of a section', line)
 			# read key, value
 			key, equal, value = [x.strip() for x in line.partition('=')]
+
+			if current_section is None and key != 'Include':
+				raise InvalidSyntax(f.name, 'statement outside of a section', line)
 
 			# include files
 			if equal == '=' and key == 'Include':

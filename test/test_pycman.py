@@ -15,6 +15,31 @@ RootDir = {rootdir}
 DBPath = {dbpath}
 """
 
+CONFIG_WITH_INCLUDE = """
+Include = {config}
+[core]
+Server = https://example.com/archlinux/$repo/os/$arch/
+"""
+
+CONFIG_WITH_INCLUDE_SECTION = """
+[options]
+Include = {config}
+
+[core]
+Server = https://example.com/archlinux/$repo/os/$arch/
+"""
+
+OPTIONS_SECTION_CONFIG = """
+RootDir = {rootdir}
+DBPath = {dbpath}
+"""
+
+INCLUDED_CONFIG = """
+[options]
+RootDir = {rootdir}
+DBPath = {dbpath}
+"""
+
 
 def test_init_with_config_invalid(tmpdir):
     configfile = tmpdir.join("bad.cfg")
@@ -31,6 +56,29 @@ def test_init_with_config(tmpdir):
 
     configfile = tmpdir.join("good.cfg")
     configfile.write(CONFIG.format(rootdir=rootdir, dbpath=dbpath))
+    handle = init_with_config(str(configfile))
+
+    assert handle.dbpath == dbpath + '/'
+    assert handle.root == rootdir
+
+
+def test_init_with_config_include(tmpdir):
+    rootdir = "/"
+    dbpath = str(tmpdir)
+
+    configfile = tmpdir.join("good.cfg")
+    include_configfile = tmpdir.join("repos.cfg")
+
+    configfile.write(CONFIG_WITH_INCLUDE.format(config=str(include_configfile)))
+    include_configfile.write(INCLUDED_CONFIG.format(rootdir=rootdir, dbpath=dbpath))
+
+    handle = init_with_config(str(configfile))
+
+    assert handle.dbpath == dbpath + '/'
+    assert handle.root == rootdir
+
+    configfile.write(CONFIG_WITH_INCLUDE_SECTION.format(config=str(include_configfile)))
+    include_configfile.write(INCLUDED_CONFIG.format(rootdir=rootdir, dbpath=dbpath))
     handle = init_with_config(str(configfile))
 
     assert handle.dbpath == dbpath + '/'
