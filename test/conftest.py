@@ -12,7 +12,7 @@ from pyalpm import Handle
 
 PKG = 'linux'
 REPO_1 = 'core'
-
+REPO_2 = 'extra'
 
 @pytest.fixture(scope="module")
 def db_data():

@@ -1,7 +1,7 @@
 from gc import collect
 
 from pyalpm import Handle
-from conftest import REPO_1
+from conftest import REPO_2
 
 
 ARCH = 'x86_64'
@@ -15,29 +15,29 @@ def get_localdb():
 
 def register_syncdb():
     handle = Handle('/', '/tmp/')
-    repo = handle.register_syncdb(REPO_1, 0)
-    repo.servers = [TEST_MIRROR.format(repo=REPO_1, arch=ARCH)]
+    repo = handle.register_syncdb(REPO_2, 0)
+    repo.servers = [TEST_MIRROR.format(repo=REPO_2, arch=ARCH)]
     return repo
 
 
 def get_syncdb():
     # Return syncdb, so handle should go out of scope
     handle = Handle('/', '/tmp/')
-    repo = handle.register_syncdb(REPO_1, 0)
-    repo.servers = [TEST_MIRROR.format(repo=REPO_1, arch=ARCH)]
+    repo = handle.register_syncdb(REPO_2, 0)
+    repo.servers = [TEST_MIRROR.format(repo=REPO_2, arch=ARCH)]
     return handle.get_syncdbs()[0]
 
 
 def get_pkg_search():
     db = get_syncdb()
     db.update(False)
-    return db.search('pacman')[0]
+    return db.search('plasma-desktop')[0]
 
 
 def get_pkg_db():
     db = get_syncdb()
     db.update(False)
-    return db.get_pkg('pacman')
+    return db.get_pkg('plasma-desktop')
 
 
 def get_grpcache_pkg():
@@ -51,7 +51,7 @@ def get_read_grp():
     syncdb = get_syncdb()
     syncdb.update(False)
     # return pkg
-    return syncdb.read_grp('base-devel')[1][0]
+    return syncdb.read_grp('plasma')[1][0]
 
 
 def get_db_pkgcache():
