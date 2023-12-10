@@ -85,3 +85,15 @@ You can use the syncdb to, for example, search for packages:
    linux = core.get_pkg("linux")
    print(linux.download_size)
    # around 70 megabytes
+
+You can query the list of files in a syncdb package by changing the database
+extension to ".files" (this is similar to "pacman -F" operations).
+
+.. code-block:: python
+
+   handle = Handle(".", "/var/lib/pacman")
+   handle.dbext = ".files"
+   core = handle.register_syncdb("core", pyalpm.SIG_DATABASE_OPTIONAL)
+   coreutils = core.get_pkg("coreutils")
+   print(coreutils.files[0])
+   # ('usr/', 0, 0)
