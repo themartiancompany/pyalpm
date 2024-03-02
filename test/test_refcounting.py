@@ -66,20 +66,20 @@ def get_db_pkgcache():
 def test_localdb_segfault():
     localdb = get_localdb()
     collect()
-    x = localdb.search('yay')
+    x = localdb.search('thiscannotbefoundatall')
     assert x == []
 
 
 def test_syncdb_segfault():
     syncdb = get_syncdb()
     collect()
-    assert syncdb.search('yay') == []
+    assert syncdb.search('thiscannotbefoundatall') == []
 
 
 def test_register_syncdb_segfault():
     syncdb = register_syncdb()
     collect()
-    assert syncdb.search('yay') == []
+    assert syncdb.search('thiscannotbefoundatall') == []
 
 # Package tests, where the DB goes out of scope
 
