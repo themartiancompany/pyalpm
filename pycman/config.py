@@ -64,6 +64,7 @@ SINGLE_OPTIONS = (
 	'LogFile',
 	'Architecture',
 	'XferCommand',
+	'CacheServer'
 	'CleanMethod',
 	'SigLevel',
 	'LocalFileSigLevel',
@@ -125,7 +126,7 @@ class PacmanConfEnumeratorSession():
 				continue
 			if current_section != 'options':
 				# repos only have the Server, SigLevel, Usage options
-				if key in ('Server', 'SigLevel', 'Usage') and equal == '=':
+				if key in ('Server', 'SigLevel', 'Usage', 'CacheServer') and equal == '=':
 					yield (current_section, key, value)
 				else:
 					raise InvalidSyntax(f.name, 'invalid key for repository configuration', line)
