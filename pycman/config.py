@@ -64,7 +64,7 @@ SINGLE_OPTIONS = (
 	'LogFile',
 	'Architecture',
 	'XferCommand',
-	'CacheServer'
+	'CacheServer',
 	'CleanMethod',
 	'SigLevel',
 	'LocalFileSigLevel',
