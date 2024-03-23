@@ -206,8 +206,8 @@ class PacmanConfig(object):
 					if key == 'Server':
 						servers.append(value)
 		if "CacheDir" not in self.options:
-            _root = self.options["RootDir"]
-            self.options["CacheDir"] = [f"{_root}var/cache/pacman/pkg"]
+			_root = self.options["RootDir"]
+			self.options["CacheDir"] = [f"{_root}var/cache/pacman/pkg"]
 
 	def load_from_options(self, options):
 		global _logmask
