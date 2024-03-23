@@ -155,10 +155,10 @@ class PacmanConfEnumeratorSession():
 
 
 def _get_root():
-	_sh = shutil.which("sh")
-	_bin = os.path.dirname(_sh)
+    _sh = shutil.which("sh")
+    _bin = os.path.dirname(_sh)
     _usr = os.path.dirname(_bin)
-	_root = os.path.dirname(_usr)
+    _root = os.path.dirname(_usr)
     print(_root)
 
 _logmask = pyalpm.LOG_ERROR | pyalpm.LOG_WARNING
