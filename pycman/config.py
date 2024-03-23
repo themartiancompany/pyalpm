@@ -31,6 +31,7 @@ import sys
 import argparse
 import collections
 import warnings
+import shutil
 
 import pyalpm
 
@@ -153,6 +154,13 @@ class PacmanConfEnumeratorSession():
 			fd.close()
 
 
+def _get_root():
+	_sh = shutil.which("sh")
+	_bin = os.path.dirname(_sh)
+    _usr = os.path.dirname(_bin)
+	_root = os.path.dirname(_usr)
+    print(_root)
+
 _logmask = pyalpm.LOG_ERROR | pyalpm.LOG_WARNING
 
 def cb_log(level, line):
@@ -170,12 +178,13 @@ def cb_log(level, line):
 
 class PacmanConfig(object):
 	def __init__(self, conf=None, options=None):
+		_root = _get_root()
 		self.options = {}
 		self.repos = collections.OrderedDict()
-		self.options["RootDir"] = "/"
-		self.options["DBPath"] = "/var/lib/pacman"
-		self.options["GPGDir"] = "/etc/pacman.d/gnupg/"
-		self.options["LogFile"] = "/var/log/pacman.log"
+		self.options["RootDir"] = _root
+		self.options["DBPath"] = f"{_root}var/lib/pacman"
+		self.options["GPGDir"] = f"{_root}etc/pacman.d/gnupg/"
+		self.options["LogFile"] = f"{_root}var/log/pacman.log"
 		self.options["Architecture"] = os.uname()[-1]
 		if conf is not None:
 			self.load_from_file(conf)
@@ -197,7 +206,8 @@ class PacmanConfig(object):
 					if key == 'Server':
 						servers.append(value)
 		if "CacheDir" not in self.options:
-			self.options["CacheDir"] = ["/var/cache/pacman/pkg"]
+		    _root = self.options["RootDir"]
+			self.options["CacheDir"] = [f"{_root}var/cache/pacman/pkg"]
 
 	def load_from_options(self, options):
 		global _logmask
@@ -298,7 +308,8 @@ def init_with_config_and_options(options):
 	if options.config is not None:
 		config_file = options.config
 	else:
-		config_file = "/etc/pacman.conf"
+		_root = _get_root()
+		config_file = f"{_root}etc/pacman.conf"
 
 	conf = PacmanConfig(conf=config_file, options=options)
 	return conf.initialize_alpm()
