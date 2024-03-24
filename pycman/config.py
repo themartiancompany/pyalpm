@@ -159,7 +159,7 @@ def _get_root():
     _bin = os.path.dirname(_sh)
     _usr = os.path.dirname(_bin)
     _root = os.path.dirname(_usr)
-    print(_root)
+    return _root
 
 _logmask = pyalpm.LOG_ERROR | pyalpm.LOG_WARNING
 
